@@ -1,2 +1,63 @@
 <%- contentFor('body') %>
+<script>
+    window.onload = () => {
+        axios
+            .get('/getBoardLists')
+            .then(res => {
+                let length = res.data.length;
+                for (let i = 0; i <= length - 1; i++) {
+                    let seq = res.data[i].seq;
+                    let title = res.data[i].title;
+                    let content = res.data[i].content;
+                    let regdate = res.data[i].regdate;
+                    let modidate = res.data[i].modidate;
+                    let name = res.data[i].name;
+                    let hit = res.data[i].hit;
+                    let dataArray = new Array(
+                        seq,
+                        title,
+                        regdate,
+                        modidate,
+                        name,
+                        hit
+                    );
+                    console.log(dataArray);
+                    console.log(length);
+                    // let length = res.data
+                    // console.log(seq, title, content, regdate, modidate, name, hit);
+
+                    const boardList = document.getElementById('boardList');
+                    for (let x = 0; x < length - 1; x++) {
+                        const row = document.createElement('tr');
+                        boardList.appendChild(row);
+                        for (let j = 0; j <= 5; j++) {
+                            const cell = document.createElement('td');
+                            const cellText = document.createTextNode(
+                                `${dataArray[j]}`
+                            );
+                            row.appendChild(cell);
+                            cell.appendChild(cellText);
+                        }
+                    }
+                }
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    };
+</script>
+
 <h1>main page.</h1>
+<div>
+    <table>
+        <thead>
+            <th>No.</th>
+            <th>Title</th>
+            <th>RegiDate</th>
+            <th>ModiDate</th>
+            <th>name</th>
+            <th>Hit</th>
+        </thead>
+        <tbody id="boardList"></tbody>
+    </table>
+</div>

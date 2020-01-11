@@ -12,7 +12,9 @@ app.set('layout extractScripts', true);
 app.use(expressLayouts);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
 app.use('/static', express.static(__dirname + '/public'));
+app.use('/js', express.static(__dirname + '/node_modules/axios/dist'));
 
 const mainRoute = require('./routes/mainRoute');
 app.use('/', mainRoute);
