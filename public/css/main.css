@@ -1,0 +1,15 @@
+#boardList {
+    text-align: center;
+}
+table {
+    margin: 0 auto;
+}
+tbody > tr:nth-child(1) > td:nth-child(2) {
+    width: 800px;
+}
+.inputArea {
+    width: 994px;
+    height: 30px;
+    margin: 0 auto;
+    text-align: right;
+}

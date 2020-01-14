@@ -13,24 +13,42 @@
                     let modidate = res.data[i].modidate;
                     let name = res.data[i].name;
                     let hit = res.data[i].hit;
-                    let dataArray = new Array(
-                        seq,
-                        title,
-                        regdate,
-                        modidate,
-                        name,
-                        hit
-                    );
-                    console.log(dataArray);
-                    console.log(length);
+
+                    // 등록 시간 표현
+                    let regDate = new Date(regdate);
+                    let mounth = regDate.getMonth() + 1;
+                    let date = regDate.getDate();
+                    if (date < 10) {
+                        date = '0' + date;
+                    }
+                    let hours = regDate.getHours();
+                    let minutes = regDate.getMinutes();
+                    if (minutes < 10) {
+                        minutes = '0' + minutes;
+                    }
+                    let seconds = regDate.getSeconds();
+                    let compareTime = new Date().getDate();
+                    let past = `${mounth}-${date}`;
+                    let today = `${hours}:${minutes}`;
+                    if (compareTime == date) {
+                        regdate = today;
+                    } else {
+                        regdate = past;
+                    }
+                    if (modidate == null) {
+                        modidate = '';
+                    }
+                    let dataArray = new Array(seq, title, regdate, name, hit);
+                    // console.log(dataArray);
+                    // console.log(length);
                     // let length = res.data
                     // console.log(seq, title, content, regdate, modidate, name, hit);
 
                     const boardList = document.getElementById('boardList');
-                    for (let x = 0; x < length - 1; x++) {
+                    for (let x = 0; x < 1; x++) {
                         const row = document.createElement('tr');
                         boardList.appendChild(row);
-                        for (let j = 0; j <= 5; j++) {
+                        for (let j = 0; j <= 4; j++) {
                             const cell = document.createElement('td');
                             const cellText = document.createTextNode(
                                 `${dataArray[j]}`
@@ -48,16 +66,16 @@
 </script>
 
 <h1>main page.</h1>
-<div>
+<div style="width: 1200px; margin: 0 auto;">
     <table>
         <thead>
             <th>No.</th>
             <th>Title</th>
             <th>RegiDate</th>
-            <th>ModiDate</th>
             <th>name</th>
             <th>Hit</th>
         </thead>
         <tbody id="boardList"></tbody>
     </table>
+    <div class="inputArea"></div>
 </div>

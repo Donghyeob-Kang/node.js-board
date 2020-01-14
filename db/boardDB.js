@@ -3,7 +3,7 @@ const pool = require('../services/database').pool;
 module.exports.getBoardLists = callback => {
     pool.getConnection((e, connection) => {
         if (!e) {
-            const query = 'SELECT * FROM tbl_board';
+            const query = 'SELECT * FROM tbl_board ORDER BY regdate DESC';
             connection.query(query, [], (e, result) => {
                 connection.release();
                 if (!e) {
