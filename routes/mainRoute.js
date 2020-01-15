@@ -11,4 +11,10 @@ router.get('/getBoardLists', (req, res) => {
     });
 });
 
+router.get('/:id', (req, res) => {
+    let id = req.params.id;
+
+    res.send(id);
+});
+
 module.exports = router;

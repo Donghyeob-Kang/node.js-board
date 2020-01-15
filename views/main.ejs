@@ -5,6 +5,21 @@
             .get('/getBoardLists')
             .then(res => {
                 let length = res.data.length;
+
+                // 페이징
+                let pageCount = parseInt(length / 5) + 1;
+                const inputArea = document.getElementById('inputArea');
+                for (let y = 1; y < pageCount + 1; y++) {
+                    inputBtn = document.createElement('a');
+                    inputBtn.innerHTML = '<a href="/' + y + '">' + y + '</a>';
+                    inputBtn.id = 'inputBtn';
+                    document.getElementById('inputBtn');
+                    inputArea.appendChild(inputBtn);
+                    // console.log(id);
+                }
+
+                // if (pa) {
+                // }
                 for (let i = 0; i <= length - 1; i++) {
                     let seq = res.data[i].seq;
                     let title = res.data[i].title;
@@ -77,5 +92,5 @@
         </thead>
         <tbody id="boardList"></tbody>
     </table>
-    <div class="inputArea"></div>
+    <div id="inputArea"></div>
 </div>

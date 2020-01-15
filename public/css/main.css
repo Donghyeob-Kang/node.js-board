@@ -7,9 +7,12 @@ table {
 tbody > tr:nth-child(1) > td:nth-child(2) {
     width: 800px;
 }
-.inputArea {
-    width: 994px;
+#inputArea {
+    width: 500px;
     height: 30px;
     margin: 0 auto;
-    text-align: right;
+    text-align: center;
+}
+#inputBtn {
+    margin: 0 15px;
 }
