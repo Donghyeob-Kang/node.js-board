@@ -6,15 +6,13 @@ router.get('/', (req, res) => {
 });
 
 router.get('/getBoardLists', (req, res) => {
-    db.getBoardLists(result => {
+    let firstList = parseInt(req.query.firstList);
+    let viewList = parseInt(req.query.viewList);
+
+    db.getBoardLists(firstList, viewList, result => {
         res.send(result);
+        console.log(result);
     });
-});
-
-router.get('/:id', (req, res) => {
-    let id = req.params.id;
-
-    res.send(id);
 });
 
 module.exports = router;
