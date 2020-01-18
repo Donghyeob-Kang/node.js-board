@@ -6,10 +6,10 @@ router.get('/', (req, res) => {
 });
 
 router.get('/getBoardLists', (req, res) => {
-    let firstList = parseInt(req.query.firstList);
-    let viewList = parseInt(req.query.viewList);
+    let first = parseInt(req.query.first);
+    let view = parseInt(req.query.view);
 
-    db.getBoardLists(firstList, viewList, result => {
+    db.getBoardLists(first, view, result => {
         res.send(result);
         console.log(result);
     });
