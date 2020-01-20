@@ -1,117 +1,4 @@
 <%- contentFor('body') %>
-<script>
-    const view = 5;
-    let first = 0;
-    document.addEventListener('DOMContentLoaded', () => {
-        paging();
-        printBoard(first);
-    });
-    const printBoard = first => {
-        console.log('start printBoard()');
-        console.log('printBoard first : ' + first);
-        axios.get(`/getBoardLists?first=${first}&view=${view}`).then(res => {
-            // console.log(res);
-
-            // initialize
-            let length = res.data[0].length;
-            for (let a = 0; a < length; a++) {
-                let seq = res.data[0][a].seq;
-                let title = res.data[0][a].title;
-                let regdate = res.data[0][a].regdate;
-                let name = res.data[0][a].name;
-                let hit = res.data[0][a].hit;
-
-                // 등록 시간 표현
-                let regDate = new Date(regdate);
-                let mounth = regDate.getMonth() + 1;
-                let date = regDate.getDate();
-                if (date < 10) {
-                    date = '0' + date;
-                }
-                let hours = regDate.getHours();
-                let minutes = regDate.getMinutes();
-                if (minutes < 10) {
-                    minutes = '0' + minutes;
-                }
-                let seconds = regDate.getSeconds();
-                let compareTime = new Date().getDate();
-                let past = `${mounth}-${date}`;
-                let today = `${hours}:${minutes}`;
-                if (compareTime == date) {
-                    regdate = today;
-                } else {
-                    regdate = past;
-                }
-
-                // array initialize
-                let dataArray = new Array(seq, title, regdate, name, hit);
-                let arrLength = dataArray.length;
-
-                // print lists
-                const tbody = document.getElementById('boardList');
-                for (let b = 0; b < 1; b++) {
-                    let row = document.createElement('tr');
-                    tbody.appendChild(row);
-                    for (let c = 0; c < 5; c++) {
-                        const cell = document.createElement('td');
-                        let cellItem = document.createTextNode(
-                            `${dataArray[c]}`
-                        );
-                        row.appendChild(cell);
-                        cell.appendChild(cellItem);
-                    }
-                }
-            }
-        });
-    };
-    const paging = btnValue => {
-        console.log('start paging()');
-        axios.get(`/getBoardLists?first=${first}&view=${view}`).then(res => {
-            // console.log(res);
-
-            //total page count
-            let count = res.data[1][0].ctn;
-            let totalPage = parseInt(count / view) + 1;
-
-            // button create
-            let btnArea = document.getElementById('inputArea');
-            let boardList = document.getElementById('boardList');
-
-            // page 이동 시 button 및 table 내용 삭제
-            while (boardList.firstChild) {
-                boardList.removeChild(boardList.firstChild);
-            }
-            while (btnArea.firstChild) {
-                btnArea.removeChild(btnArea.firstChild);
-            }
-
-            // limit 값
-            let firstArr = new Array();
-            for (let a = 0; a < totalPage; a++) {
-                firstArr[a] = a * 5;
-                if (isNaN(btnValue)) {
-                    btnValue = 0;
-                    first = firstArr[0];
-                } else {
-                    first = firstArr[a];
-                }
-                const btn = document.createElement('button');
-                let btnIndex = document.createTextNode(`${a + 1}`);
-                btn.setAttribute(`type`, `button`);
-                btn.setAttribute(`class`, `pageBtn`);
-                btnArea.appendChild(btn);
-                btn.appendChild(btnIndex);
-                btn.setAttribute(
-                    `onclick`,
-                    `paging(${a + 1}), printBoard(${first})`
-                );
-            }
-            console.log('paging btn value : ' + btnValue);
-            console.log('paging first value : ' + first);
-        });
-    };
-</script>
-
 <h1>main page.</h1>
 <div style="width: 1200px; margin: 0 auto;">
     <table>
@@ -126,3 +13,137 @@
     </table>
     <div id="inputArea"></div>
 </div>
+
+<script>
+    const view = 5;
+    let first = 0;
+    document.addEventListener('DOMContentLoaded', () => {
+        paging();
+        printBoard(first);
+    });
+    const printBoard = first => {
+        console.log('start printBoard()');
+        console.log('printBoard first : ' + first);
+        axios
+            .get(`/getBoardLists?first=${first}&view=${view}`)
+            .then(res => {
+                // console.log(res);
+
+                // initialize
+                let length = res.data[0].length;
+                for (let a = 0; a < length; a++) {
+                    let seq = res.data[0][a].seq;
+                    let title = res.data[0][a].title;
+                    let regdate = res.data[0][a].regdate;
+                    let name = res.data[0][a].name;
+                    let hit = res.data[0][a].hit;
+
+                    // 등록 시간 표현
+                    let regDate = new Date(regdate);
+                    let mounth = regDate.getMonth() + 1;
+                    let date = regDate.getDate();
+                    if (date < 10) {
+                        date = '0' + date;
+                    }
+                    let hours = regDate.getHours();
+                    let minutes = regDate.getMinutes();
+                    if (minutes < 10) {
+                        minutes = '0' + minutes;
+                    }
+                    let seconds = regDate.getSeconds();
+                    let compareTime = new Date().getDate();
+                    let past = `${mounth}-${date}`;
+                    let today = `${hours}:${minutes}`;
+                    if (compareTime == date) {
+                        regdate = today;
+                    } else {
+                        regdate = past;
+                    }
+
+                    // array initialize
+
+                    let dataArray = new Array(seq, title, regdate, name, hit);
+                    let arrLength = dataArray.length;
+
+                    // print lists
+                    const tbody = document.getElementById('boardList');
+                    for (let b = 0; b < 1; b++) {
+                        let row = document.createElement('tr');
+                        tbody.appendChild(row);
+                        for (let c = 0; c < 5; c++) {
+                            if (c != 1) {
+                                const cell = document.createElement('td');
+                                let cellItem = document.createTextNode(
+                                    `${dataArray[c]}`
+                                );
+                                row.appendChild(cell);
+                                cell.appendChild(cellItem);
+                            } else {
+                                const cell = document.createElement('td');
+                                cell.innerHTML = `<a href='/printBoard?list=${dataArray[0]}'>${dataArray[1]}</a>`;
+                                row.appendChild(cell);
+                            }
+                        }
+                    }
+                    for (let d = 0; d < 5; d++) {
+                        let tst = (boardList.rows[d] = 'test');
+                        console.log(tst);
+                    }
+                }
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    };
+    const paging = btnValue => {
+        console.log('start paging()');
+        axios
+            .get(`/getBoardLists?first=${first}&view=${view}`)
+            .then(res => {
+                // console.log(res);
+
+                //total page count
+                let count = res.data[1][0].ctn;
+                let totalPage = parseInt(count / view) + 1;
+
+                // button create
+                let btnArea = document.getElementById('inputArea');
+                let boardList = document.getElementById('boardList');
+
+                // page 이동 시 button 및 table 내용 삭제
+                while (boardList.firstChild) {
+                    boardList.removeChild(boardList.firstChild);
+                }
+                while (btnArea.firstChild) {
+                    btnArea.removeChild(btnArea.firstChild);
+                }
+
+                // limit 값
+                let firstArr = new Array();
+                for (let a = 0; a < totalPage; a++) {
+                    firstArr[a] = a * 5;
+                    if (isNaN(btnValue)) {
+                        btnValue = 0;
+                        first = firstArr[0];
+                    } else {
+                        first = firstArr[a];
+                    }
+                    const btn = document.createElement('button');
+                    let btnIndex = document.createTextNode(`${a + 1}`);
+                    btn.setAttribute(`type`, `button`);
+                    btn.setAttribute(`class`, `pageBtn`);
+                    btnArea.appendChild(btn);
+                    btn.appendChild(btnIndex);
+                    btn.setAttribute(
+                        `onclick`,
+                        `paging(${a + 1}), printBoard(${first})`
+                    );
+                }
+                console.log('paging btn value : ' + btnValue);
+                console.log('paging first value : ' + first);
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    };
+</script>

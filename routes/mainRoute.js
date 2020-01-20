@@ -11,7 +11,14 @@ router.get('/getBoardLists', (req, res) => {
 
     db.getBoardLists(first, view, result => {
         res.send(result);
-        console.log(result);
+    });
+});
+
+router.get('/printBoard', (req, res) => {
+    let list = parseInt(req.query.list);
+
+    db.printBoard(list, result => {
+        res.render('board', { result: result[0] });
     });
 });
 

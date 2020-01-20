@@ -1,0 +1,14 @@
+<%- contentFor('body') %>
+<h1>board</h1>
+<div>
+    <span><font style="font-weight: bold;">no.</font><%= result.seq%> </span>
+    <span>
+        <font style="font-weight: bold; margin-left: 20px;">title </font>
+        <%=result.title%>
+    </span>
+    <span>
+        <font style="font-weight: bold; margin-left: 20px;">regdate </font>
+        <%=result.regdate%>
+    </span>
+</div>
+<div><%= result.content%></div>
