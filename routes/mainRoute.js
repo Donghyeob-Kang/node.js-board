@@ -18,7 +18,15 @@ router.get('/printBoard', (req, res) => {
     let list = parseInt(req.query.list);
 
     db.printBoard(list, result => {
-        res.render('board', { result: result[0] });
+        res.render(`board`, result);
+    });
+});
+
+router.get('/board', (req, res) => {
+    let listNum = req.query.listNum;
+    console.log(`router list : ${listNum}`);
+    db.printBoard(listNum, result => {
+        res.send(result);
     });
 });
 

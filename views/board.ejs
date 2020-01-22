@@ -1,14 +1,19 @@
 <%- contentFor('body') %>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        let temp = location.href.split('?');
+        console.log(temp);
+        let list = temp[1].split('=');
+        console.log(list);
+        let listNum = list[1];
+        console.log(parseInt(listNum));
+        axios
+            .get(`/board?listNum=${listNum}`)
+            .then(res => {
+                console.log(res);
+            })
+            .catch();
+    });
+</script>
 <h1>board</h1>
-<div>
-    <span><font style="font-weight: bold;">no.</font><%= result.seq%> </span>
-    <span>
-        <font style="font-weight: bold; margin-left: 20px;">title </font>
-        <%=result.title%>
-    </span>
-    <span>
-        <font style="font-weight: bold; margin-left: 20px;">regdate </font>
-        <%=result.regdate%>
-    </span>
-</div>
-<div><%= result.content%></div>
+<div></div>
